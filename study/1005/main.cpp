@@ -1,46 +1,66 @@
 #include <iostream>
-#include <vector>
+#include <climits>
+
+void shift(int *array, int n, int *data);
+
+void calcDiff(const int *array, int n, const int *data);
 
 using std::cout;
 using std::endl;
 using std::cin;
 
+long min = INT_MAX;
+
 int main() {
+    int n = 0;
+    cin >> n;
+    int array[20];
+    int data[20];
 
-    int inputData[20];
-    int numberOfRocks;
-    cin >> numberOfRocks;
-    int data;
-    for (int i = 0; i < numberOfRocks; i++) {
-        cin >> data;
-        inputData[i] = data;
+    for (int i = 0; i < n; ++i) {
+        array[i] = 0;
+        cin >> data[i];
+    }
+    array[n] = 0;
+    shift(array, n, data);
+    cout << min << endl;
+    return 0;
+}
+
+void shift(int *array, int n, int *data) {
+    array[0]++;
+    for (int i = 0; i < n; ++i) {
+        if (array[i] == 2) {
+            array[i + 1]++;
+            array[i] = 0;
+        }
     }
 
+    if (array[n] != 1) {
+//        for (int i = 0; i < n; ++i) {
+//            cout << array[i];
+//        }
+//        cout << endl;
+        calcDiff(array, n, data);
+        shift(array, n, data);
+    }
+}
 
-    int firsHeap = 0;
-    int secondHeap = 0;
-    int maxWeight;
-    int coeffOfMaxWeight;
-    for (int i = 0; i < numberOfRocks; i++) {
+void calcDiff(const int *array, int n, const int *data) {
+    long firstHeap = 0;
+    long secondHeap = 0;
 
-        coeffOfMaxWeight = 0;
-        maxWeight = inputData[coeffOfMaxWeight];
-
-        for (int j = 1; j < numberOfRocks; ++j) {
-            if (maxWeight < inputData[j]) {
-                coeffOfMaxWeight = j;
-                maxWeight = inputData[coeffOfMaxWeight];
-            }
-        }
-
-
-        if (firsHeap < secondHeap) {
-            firsHeap += maxWeight;
+    for (int i = 0; i < n; ++i) {
+        if (array[i] == 0) {
+            firstHeap += data[i];
         } else {
-            secondHeap += maxWeight;
+            secondHeap += data[i];
         }
-        inputData[coeffOfMaxWeight] = -1;
     }
 
-    cout << abs(firsHeap - secondHeap) << endl;
+    long minHeap = labs(firstHeap - secondHeap);
+
+    if (min > minHeap) {
+        min = minHeap;
+    }
 }
