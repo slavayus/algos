@@ -1,9 +1,9 @@
 #include <iostream>
 #include <climits>
 
-void shift(int *array, int n, int *data);
+void shift(int *array, int *data);
 
-void calcDiff(const int *array, int n, const int *data);
+void calcDiff(const int *array, const int *data);
 
 using std::cout;
 using std::endl;
@@ -11,42 +11,41 @@ using std::cin;
 
 long min = INT_MAX;
 
+int n = 0;
+
 int main() {
-    int n = 0;
     cin >> n;
-    int array[20];
-    int data[20];
+    int array[25];
+    int data[25];
 
     for (int i = 0; i < n; ++i) {
         array[i] = 0;
         cin >> data[i];
     }
     array[n] = 0;
-    shift(array, n, data);
+    shift(array, data);
     cout << min << endl;
     return 0;
 }
 
-void shift(int *array, int n, int *data) {
+void shift(int *array, int *data) {
     array[0]++;
     for (int i = 0; i < n; ++i) {
         if (array[i] == 2) {
             array[i + 1]++;
             array[i] = 0;
+        } else {
+            break;
         }
     }
 
     if (array[n] != 1) {
-//        for (int i = 0; i < n; ++i) {
-//            cout << array[i];
-//        }
-//        cout << endl;
-        calcDiff(array, n, data);
-        shift(array, n, data);
+        calcDiff(array, data);
+        shift(array, data);
     }
 }
 
-void calcDiff(const int *array, int n, const int *data) {
+void calcDiff(const int *array, const int *data) {
     long firstHeap = 0;
     long secondHeap = 0;
 
