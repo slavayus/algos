@@ -18,17 +18,27 @@ int main() {
         indexOfInputData.push_back(i + 1);
     }
 
-    quickSort(indexOfInputData, inputData, 0, k - 1);
-
-    int end = k-1;
-    while (inputData[0] != 0) {
-        for (int j = end; j >= 0; --j) {
-            if (inputData[j] != 0) {
-                cout << indexOfInputData[j] << ' ';
-                inputData[j]--;
+    int last = -1;
+    int numberOfNull = 0;
+    while (numberOfNull != k) {
+        quickSort(indexOfInputData, inputData, 0, k - 1);
+        if (last != indexOfInputData[0]) {
+            cout << indexOfInputData[0] << ' ';
+            inputData[0]--;
+            last = indexOfInputData[0];
+            if (inputData[0] == 0) {
+                ++numberOfNull;
+            }
+        } else {
+            if (inputData[1] != 0) {
+                cout << indexOfInputData[1] << ' ';
+                inputData[1]--;
+                last = indexOfInputData[1];
+                if (inputData[1] == 0) {
+                    ++numberOfNull;
+                }
             } else {
-                end = j-1;
-                break;
+                last = -1;
             }
         }
     }
