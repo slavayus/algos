@@ -21,16 +21,17 @@ int main() {
 
     long long currentPotential = 0;
     long long maxPotential = 0;
-    int start = 0;
 
+    //Подсчитываем сумму и каждый раз проверяем, является ли она уже больше найденной.
+    //Если нашли сумму больше, то запоминаем ее.
+    //Если при подсчете суммы получилось так, что мы ушли в минус, то начинаем подсчет суммы с нуля.
     for (int j = 0; j < countAlpha; ++j) {
 
         currentPotential += inputData[j];
         if (currentPotential < 0) {
             currentPotential = 0;
-            start = j;
         }
-        if (currentPotential > maxPotential && start != j) {
+        if (currentPotential > maxPotential) {
             maxPotential = currentPotential;
         }
 
